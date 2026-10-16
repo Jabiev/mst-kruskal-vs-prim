@@ -7,11 +7,20 @@ Team: Nurlan Jabiyev · _partner name_
 
 ---
 
-## 1. The question in one sentence
+## 1. Aim
 
 > Both Kruskal and Prim always find the **same cheapest network** connecting every vertex.
-> So **which one is faster, on which kind of graph, and which internal part (sorting,
-> union-find, heap) is responsible?**
+> So we compare **cost, not result**: **which one is faster, on which kind of graph, and
+> which internal part (sorting, union-find, heap) is really responsible?**
+
+Why this needs an experiment: Big-O does not decide it. Kruskal is O(E log E) and heap-Prim
+is O(E log V), and since E ≤ V², **both are Θ(E log V)**. In Python the "obvious" bottleneck
+(sorting) runs in C, while union-find runs as Python code, so the textbook explanation may
+not match reality.
+
+**Research questions:** RQ1 crossover density · RQ2 cost breakdown (sort vs union-find,
+stale heap pops) · RQ3 structure at equal size (grid vs random) · RQ4 does runtime scale
+like E log V. Full aim, hypotheses and refutation criteria: [`docs/charter.md`](docs/charter.md).
 
 ## 2. The two methods
 
@@ -23,10 +32,12 @@ Team: Nurlan Jabiyev · _partner name_
 
 ## 3. Prediction (written before any experiment)
 
-1. **Sparse graphs:** Kruskal is faster — few edges to sort.
-2. **Dense graphs:** Prim overtakes Kruskal — Kruskal must sort every edge.
-3. **Union-find stays cheap:** with path compression, average path steps per `find` stay close to 1.
-4. **Grid graphs** are always sparse (≤ 4 neighbours), so Kruskal wins there at every size.
+1. **H1 Sparse graphs:** Kruskal is faster.
+2. **H2 Dense graphs:** Prim catches up; a crossover may exist, but need not (both Θ(E log V)).
+3. **H3 Bottleneck:** in Python, union-find, not sorting, takes most of Kruskal's time.
+4. **H4 Union-find stays cheap:** average path steps per `find` stay below 2.
+5. **H5 Prim's waste:** the stale-pop ratio grows with density.
+6. **H6 Structure:** at equal V and E, grid vs random changes runtime by less than 10 %.
 
 A result that contradicts any of these is still a valid result if the method is rigorous.
 
@@ -37,6 +48,7 @@ A result that contradicts any of these is still a valid result if the method is 
 | Random graphs, vertices V | 200, 500, 1000 |
 | Edge probability p | 0.01, 0.05, 0.20 |
 | Grid graphs | 32×32, 64×64 |
+| Matched random graphs | same V and E as each grid (isolates structure from size) |
 | Weights | uniform integers 1..100 |
 | Connectivity | a random spanning tree is built first, then extra edges added |
 | Seeds | 10 per setting |
@@ -50,6 +62,7 @@ timeouts are kept and discussed, never deleted. **Sorting is inside Kruskal's ti
 | Measurement | Why |
 |---|---|
 | Median runtime | Who is faster |
+| Sort time vs union-find time (separate instrumented run) | Where Kruskal's time goes |
 | `find` calls and path steps inside `find` | Cost of union-find |
 | Number of `union` calls | Should equal V − 1 |
 | Heap pushes, stale pops / total pops | Cost of Prim's lazy heap |
@@ -106,9 +119,19 @@ figures/                generated plots
 - Measured code uses the **standard library only**; `pandas` and `matplotlib` for analysis.
 
 ```bash
-python -m venv .venv
+py -3.12 -m venv .venv
 .venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 python -m pytest                # correctness first
-python -m src.bench.run         # full benchmark -> results/
+python -m src.bench.run --quick # smoke test, a few seconds
+python -m src.bench.run         # full benchmark -> results/*.csv + environment *.json
 ```
+
+## 11. Status
+
+- [x] Charter: aim, research questions, refutable hypotheses
+- [x] Graph ADT, generators (random, grid, matched), union-find, Kruskal, Prim, with counters
+- [x] Tests: hand-checked graphs, `networkx` oracle, edge cases, heavy ties, counter invariants
+- [x] Benchmark runner following the timing protocol (smoke-tested)
+- [ ] Pilot run on our laptops → adjust sizes if needed → freeze protocol
+- [ ] Full sweep, analysis notebook, figures
