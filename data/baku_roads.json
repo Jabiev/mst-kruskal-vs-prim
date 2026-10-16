@@ -1,0 +1,37 @@
+{
+  "name": "Baku road network (central)",
+  "source": "OpenStreetMap via Overpass API",
+  "license": "ODbL, (c) OpenStreetMap contributors",
+  "osm_timestamp": "2026-10-16T14:20:16Z",
+  "bbox_south_west_north_east": [
+    40.35,
+    49.78,
+    40.44,
+    49.97
+  ],
+  "highway_types": [
+    "motorway",
+    "trunk",
+    "primary",
+    "secondary",
+    "tertiary",
+    "unclassified",
+    "residential",
+    "living_street",
+    "motorway_link",
+    "trunk_link",
+    "primary_link",
+    "secondary_link",
+    "tertiary_link"
+  ],
+  "weight": "street segment length in centimetres (haversine, rounded)",
+  "ways": 9568,
+  "osm_nodes": 51799,
+  "self_loops": 5,
+  "parallel": 22,
+  "components": 41,
+  "vertices": 11838,
+  "edges": 15117,
+  "dropped_vertices": 117,
+  "average_degree": 2.554
+}
