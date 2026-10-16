@@ -87,18 +87,7 @@ timeouts are kept and discussed, never deleted. **Sorting is inside Kruskal's ti
 **Optional extensions** (only if the core is done early): Kruskal *without* path compression;
 Prim with an O(V²) array instead of a heap.
 
-## 8. Who does what
-
-| Nurlan | Gunel |
-|---|---|
-| Graph ADT, graph generators | Prim + heap counters |
-| Union-find + Kruskal with counters | Benchmark runner (warm-up, 7 reps, median, caps) |
-| Correctness tests | Analysis notebook + figures |
-| **Together:** charter, checkpoint slides, interpretation, final defense | |
-
-Both of us must be able to explain **every** part of the code in the individual defense.
-
-## 9. Repository layout
+## 8. Repository layout
 
 ```
 src/mst/graph.py        weighted undirected Graph ADT (shared by both methods)
@@ -113,7 +102,7 @@ results/                raw benchmark output
 figures/                generated plots
 ```
 
-## 10. Environment and how to run
+## 9. Environment and how to run
 
 - Python **3.12** (record the exact version in the report: `python --version`)
 - Measured code uses the **standard library only**; `pandas` and `matplotlib` for analysis.
@@ -127,7 +116,7 @@ python -m src.bench.run --quick # smoke test, a few seconds
 python -m src.bench.run         # full benchmark -> results/*.csv + environment *.json
 ```
 
-## 11. Status
+## 10. Status
 
 - [x] Charter: aim, research questions, refutable hypotheses
 - [x] Graph ADT, generators (random, grid, matched), union-find, Kruskal, Prim, with counters
