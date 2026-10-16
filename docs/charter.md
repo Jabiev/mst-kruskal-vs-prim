@@ -4,7 +4,7 @@ _Sessions 1–3._
 
 ## Team
 - Nurlan Jabiyev
-- _partner_
+- Gunel Rzazade
 
 ## 1. Aim — what we want to find out
 

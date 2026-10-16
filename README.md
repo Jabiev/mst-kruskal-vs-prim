@@ -3,7 +3,7 @@
 **Project Work 1 · T05** — M1 Data Science and Artificial Intelligence · UFAZ ·
 Advanced Data Structures and Algorithms · Fall 2026
 
-Team: Nurlan Jabiyev · _partner name_
+Team: Nurlan Jabiyev · Gunel Rzazade
 
 ---
 
@@ -89,7 +89,7 @@ Prim with an O(V²) array instead of a heap.
 
 ## 8. Who does what
 
-| Nurlan | Partner |
+| Nurlan | Gunel |
 |---|---|
 | Graph ADT, graph generators | Prim + heap counters |
 | Union-find + Kruskal with counters | Benchmark runner (warm-up, 7 reps, median, caps) |
